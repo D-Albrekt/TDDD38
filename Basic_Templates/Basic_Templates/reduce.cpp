@@ -13,8 +13,14 @@ T addition(T const& lhs, T const& rhs)
 template <typename T, size_t N>
 T reduce(T const (&array)[N], T initial = {}, T(*func)(T const&, T const&) = addition<T>)
 {
-    T result{ initial };
-    return initial;
+    T result{initial};
+
+    for (size_t i{0}; i < N; i++)
+    {
+        result = func(array[i], result);
+    }
+
+    return result;
 }
 
 
