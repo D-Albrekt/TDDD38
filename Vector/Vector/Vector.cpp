@@ -9,6 +9,12 @@ Vector::Vector(double x, double y)
 	: x{x}, y{y}
 {}
 
+Vector Vector::operator-()
+{
+	x *= -1;
+	return *this;
+}
+
 bool Vector::operator==(Vector const& rhs) const
 {
 	return (rhs.x == x && rhs.y == y);
