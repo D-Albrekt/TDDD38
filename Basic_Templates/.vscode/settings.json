@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "hash_map": "cpp",
+        "string_view": "cpp",
+        "ranges": "cpp",
+        "mixinvector": "cpp",
+        "polytope": "cpp",
+        "vertexarraystate": "cpp",
+        "buffered_value": "cpp",
+        "fast_back_stack": "cpp"
+    }
+}
