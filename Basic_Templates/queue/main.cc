@@ -1,5 +1,6 @@
 #include "queue.h"
 #include <cassert>
+#include <iostream>
 
 // Macro to check if an exception was thrown
 #define assert_throws(x) {                      \
@@ -33,11 +34,12 @@ int main()
     assert(!q1.empty());
     assert(!q1.full());
 
+    std::cout << "q1.front gives:  " << q1.front() << std::endl;
     assert(q1.front() == i);
     assert(q2.front() == i);
     
-    //assert(q1.dequeue() == i);
-    //assert(q1.empty());
+    assert(q1.dequeue() == i);
+    assert(q1.empty());
   }
 
   /*

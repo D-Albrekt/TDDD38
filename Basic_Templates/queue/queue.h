@@ -10,7 +10,8 @@ public:
 bool empty() const;
 bool full() const;
 void enqueue(T value);
-T& front();
+T dequeue(); 
+T& front() const;
 
 private:
 T queue[N]{};

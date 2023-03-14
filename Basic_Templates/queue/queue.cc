@@ -15,8 +15,9 @@ void Queue<T, N>::enqueue(T value)
 {
     if(!full())
     {
-        queue[head] = value;
-        head++;
+        queue[head++ % N] = value;
+        
+
     }
     else
     {
@@ -26,7 +27,22 @@ void Queue<T, N>::enqueue(T value)
 }
 
 template<typename T, size_t N>
-T& Queue<T, N>::front()
+T& Queue<T, N>::front() const
 {
-    return queue[tail % N];
+    return const_cast<T&>(queue[tail % N]);
+}
+
+template<typename T, size_t N>
+T Queue<T, N>::dequeue() 
+{
+    if (!empty())
+    {
+        return queue[tail++ % N];        
+    }
+    else
+    {
+        T l{};
+        return l ;
+    }
+
 }
