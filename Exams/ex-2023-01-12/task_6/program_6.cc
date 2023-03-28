@@ -5,20 +5,55 @@
 
 #include <iostream>
 
+
+namespace help
+{
+    template<typename T>
+    std::vector<T> flatten(T const& t)
+    {
+        return std::vector<T>{t};
+    }
+    template<typename T, typename Container>
+    auto flatten(Container container) -> decltype(std::begin(container), std::vector<T>{})
+    {
+        std::vector<T> vec{};
+        for (auto e : container)
+        {   
+            std::vector<T> temp(help::flatten<T>(e));
+            vec.insert(std::end(vec), std::begin(temp), std::end(temp));
+        }
+        return vec;
+    }
+/*
+    template<typename T, typename U>
+    std::vector<T> flatten(T const& inner)
+    {
+        vector
+        for (auto e : inner)
+        {
+
+        }
+        return ;
+    }
+*/
+}
+
+
+
+
+
+
 template<typename T,typename Container>
 std::vector<T> flatten(Container const& container)
 {
-    if (std::is_same<T, Container>::value)
-    {
-        return std::vector<T> {container};  
-    }
-    else
-    {
-        std::cout << "Not Same" << std::endl;
-        return flatten<T>(std::begin(container));
-    }
-    
+    return help::flatten<T>(container);
+
 }
+
+
+
+
+
 //SFINAE?
 //decltype?
 //Order of specialization?
