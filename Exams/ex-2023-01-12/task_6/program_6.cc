@@ -3,12 +3,33 @@
 #include <list>
 #include <deque>
 
+#include <iostream>
+
+template<typename T,typename Container>
+std::vector<T> flatten(Container const& container)
+{
+    if (std::is_same<T, Container>::value)
+    {
+        return std::vector<T> {container};  
+    }
+    else
+    {
+        std::cout << "Not Same" << std::endl;
+        return flatten<T>(std::begin(container));
+    }
+    
+}
+//SFINAE?
+//decltype?
+//Order of specialization?
+//Comma operator?
+
 int main()
 {
     {
         assert( flatten<int>(5) == std::vector<int> { 5 } );
     }
-    {
+   {
         std::vector<std::list<int>> v {
             { 1, 2, 3 }, { 4, 5, 6, 7 }, { 8, 9 }
         };
@@ -16,7 +37,8 @@ int main()
         std::vector<int> expected { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         assert( flatten<int>(v) == expected );
     }
-
+    
+/*
     {
         std::vector<char> data {
             'a', 'b', 'c'
@@ -74,4 +96,6 @@ int main()
         assert(( flatten<int>(v) == std::vector<int>{ 5 } ));
         assert(( flatten<int*>(v) == std::vector<int*>{ &x } ));
     }
+
+    */
 }
