@@ -8,34 +8,42 @@
 
 namespace help
 {
+    template<typename T, typename Container>
+    auto flatten(Container const& container, int, int) -> decltype(std::begin(container), std::vector<T>{});
+
     template<typename T>
-    std::vector<T> flatten(T const& t)
+    std::vector<T> flatten(T const& t, int, float);
+
+    template<typename T, typename Container>
+    auto flatten(Container const& container, float, float) -> decltype(*container, std::vector<T>{});
+
+    
+    template<typename T>
+    std::vector<T> flatten(T const& t, int, float)
     {
         return std::vector<T>{t};
     }
+
     template<typename T, typename Container>
-    auto flatten(Container container) -> decltype(std::begin(container), std::vector<T>{})
+    auto flatten(Container const& container, float, float) -> decltype(*container, std::vector<T>{})
+    {
+        return flatten<T>(*container, 0, 0);
+    }
+
+
+    template<typename T, typename Container>
+    auto flatten(Container const& container, int, int) -> decltype(std::begin(container), std::vector<T>{})
     {
         std::vector<T> vec{};
         for (auto e : container)
         {   
-            std::vector<T> temp(help::flatten<T>(e));
+            std::vector<T> temp(help::flatten<T>(e, 0, 0));
             vec.insert(std::end(vec), std::begin(temp), std::end(temp));
         }
         return vec;
     }
-/*
-    template<typename T, typename U>
-    std::vector<T> flatten(T const& inner)
-    {
-        vector
-        for (auto e : inner)
-        {
 
-        }
-        return ;
-    }
-*/
+
 }
 
 
@@ -46,7 +54,7 @@ namespace help
 template<typename T,typename Container>
 std::vector<T> flatten(Container const& container)
 {
-    return help::flatten<T>(container);
+    return help::flatten<T>(container, 0, 0);
 
 }
 
@@ -73,7 +81,7 @@ int main()
         assert( flatten<int>(v) == expected );
     }
     
-/*
+
     {
         std::vector<char> data {
             'a', 'b', 'c'
@@ -132,5 +140,5 @@ int main()
         assert(( flatten<int*>(v) == std::vector<int*>{ &x } ));
     }
 
-    */
+    
 }
