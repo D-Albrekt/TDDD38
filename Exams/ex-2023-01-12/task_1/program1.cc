@@ -3,19 +3,28 @@
 #include <string>
 #include <iostream>
 #include <limits>
-
+#include <string>
+#include <sstream>
+#include <iterator>
+#include <algorithm>
 
 std::map<std::string,std::string> define_macros(std::ifstream& ifs);
 
 std::map<std::string,std::string> define_macros(std::ifstream& ifs)
 {
-    std::map<std::string, std::string> mappen{};
-    char* str{};
-    while (!ifs.eof())
+    std::map<std::string, std::string> macros{};
+    std::string mac{};
+    std::string def{};
+    while (std::getline(ifs,mac, ':'))
     {
-        std::getline(ifs, str);
-        std::cout << str << std::endl;
+        std::getline(ifs, def);
+        macros[mac] = def;
     }
+    for (auto map : macros)
+    {
+        std::cout << "Key: " << map.first << " Val: " << map.second << '\n';
+    }
+    return macros;
 }
 
 
